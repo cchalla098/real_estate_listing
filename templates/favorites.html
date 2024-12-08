@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success</title>
+    <title>My Favorites</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -17,28 +17,32 @@
             {% endif %}
             <a href="{{ url_for('normalsearch') }}"> Search</a>
             <a href="{{ url_for('search') }}">Advanced Search</a>
+
+            {% if current_user.user_type !='owner' %}
             <a href="{{ url_for('view_favorites') }}">Favorites</a>
+            {% endif %}
             {% if current_user.user_type =='owner' %}
             <a href="{{ url_for('add_property') }}">Add Property</a>
             {% endif %}
             <a href="{{ url_for('logout') }}">Logout</a>
         </nav>
     </header>
-    <main>
-    <div class="success-container">
-      
-        
-        <h1>Congratulations!</h1>
-        <p>You have successfully bought the property.</p>
-        
+    
+ <main>
+  
+    <h1>My Favorites</h1>
+    <div class="favorites-container">
+        {% for property in favorites %}
         <div class="property-card">
-            <img src="{{ url_for('static', filename='images/' + image) }}" alt="Property Image" class="property-image">
-            <h3>{{ title }}</h3>
-            <p>Location: {{ location }}</p>
-            <p>Price: ${{ price }}</p>
+            <img src="{{ url_for('static', filename='images/' + property.images) }}" alt="{{ property.title }}" class="property-image">            <h3>{{ property.title }}</h3>
+            <p>{{ property.location }}</p>
+            <p>${{ property.price }}</p>
+            <button class="view-details-btn"><a href="{{ url_for('property_details', property_id=property.id) }}">View Details</a></button>
+            <!-- <br color="white">  -->
+            <button class="view-details-btn"><a href="{{ url_for('remove_from_favorites', property_id=property.id) }}">Remove</a></button>
+            
         </div>
-
-      
+        {% endfor %}
     </div>
 </main>
 </body>

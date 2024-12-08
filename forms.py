@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FloatField, FileField
 from wtforms.validators import DataRequired, Email, Length
@@ -37,4 +31,3 @@ class SearchForm(FlaskForm):
     max_price = FloatField('Max Price')
     amenities = StringField('Amenities')
     submit = SubmitField('Search')
-
